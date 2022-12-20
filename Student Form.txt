@@ -1,0 +1,729 @@
+===================================Font End========================
+@using Accounts.Data.AccountsDataModel
+@using ERP.Web.Helpers
+@using System.Data;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUcasportfolio.cshtml";
+
+    var DepartmentList = ((DataTable)ViewBag.DepartmentList).AsEnumerable().Select(x => new
+    {
+        Id = x.Field<int>("Id"),
+        DeptShortName = x.Field<string>("DeptShortName")
+    }).ToList();
+}
+
+<h2>Index</h2>
+<style type="text/css">
+    .srchtable {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .srchtable td, .srchtable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .srchtable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .srchtable tr:hover {
+            background-color: #ddd;
+        }
+
+        .srchtable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+
+    .srchtable2 {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .srchtable2 td, .srchtable2 th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .srchtable2 tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .srchtable2 tr:hover {
+            background-color: #ddd;
+        }
+
+        .srchtable2 th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+
+    .bordercss {
+        border: 3px double #CCCCCC;
+        color: black;
+    }
+
+        .bordercss:focus {
+            box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+            border: 2px solid rgba(81, 203, 238, 1);
+        }
+
+    /*for kendo grid*/
+    .k-grouping-header {
+        background-color: #1ABB9C;
+    }
+
+    x_panel {
+        position: relative;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 0px 0px;
+        display: inline-block;
+        background: #fff;
+        border: 1px solid #E6E9ED;
+        -webkit-column-break-inside: avoid;
+        opacity: 1;
+        transition: all .2s ease;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 3px solid #6aa79b;
+    }
+
+    .btn-action {
+        display: inline-block;
+        padding: 0px 4px;
+        margin-left: 2px;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="row" style="display:none">
+    <div class="col-sm-12">
+        <div class="panel panel-success panel-custom">
+            <div class="panel-heading PageHeader">
+                <h3 class="panel-title">STUDENT INFOPRMATION</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="row form-group">
+                        <div class="col-sm-1 label-container">
+                        </div>
+
+                        <div class="col-sm-2 label-container">
+                            @Html.Label("Student Name", new { @class = "control-label" })
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" data-id="0" data-vale="" id="txtSubledgerName" />
+                        </div>
+                        <div class="col-sm-3 label-container">
+                            @Html.Label("Student Contract No:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" data-id="0" data-vale="" id="txtShortName" />
+                        </div>
+                        <br />
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-1 label-container">
+                            @Html.Label("Department", new { @class = "control-label" })
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control input-sm bordercss" id="ddlSubledgerDropdown">
+                                <option value="0">Please Select</option>
+                                @*@foreach (var dt in SubLedgerList)
+                                    {
+                                        <option value="@dt.Id">@dt.SubledgerName</option>
+                                    }*@
+                            </select>
+                        </div>
+                        <div class="col-sm-2 label-container">
+                            @Html.Label("Subject", new { @class = "control-label" })
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control input-sm bordercss" id="ddlSubMasterDropdown" autofocus="autofocus">
+                                <option value="0">Please Select</option>
+                                @*@foreach (var dt in SubMasterList)
+                                    {
+                                        <option value="@dt.Id">@dt.SubledgerMasterName</option>
+                                    }*@
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1 col-sm-offset-6">
+                <input type="button" name="btnSubmit" id="btnSave" class="btn btn-sm btn-success" value="Save" />
+            </div>
+        </div>
+        <br />
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-success panel-custom">
+            <div class="panel-heading PageHeader">
+                <h3 class="panel-title">Student Information</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="row form-group">
+                        @Html.Label("Student Name", htmlAttributes: new { @class = "control-label col-md-2 required" })
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            @Html.Editor("STudentName", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        @Html.Label("Mobile No", htmlAttributes: new { @class = "control-label col-md-2 required" })
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @Html.Editor("StudentContactNo", new { htmlAttributes = new { @class = "form-control", @Placeholder = "01xxxxxxxxx", @autofocus = true } })
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @*@Html.Label("Department", new { @class = "control-label" })*@
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <select class="form-control input-sm bordercss" id="stdDeptId">
+                                <option value="0">Please Select</option>
+                                @foreach (var dt in DepartmentList)
+                                {
+                                    <option value="@dt.Id">@dt.DeptShortName</option>
+                                }
+                            </select>
+
+                        </div>
+                        @Html.Label("Subject", new { @class = "control-label col-md-2" })
+
+                        <div class="col-sm-3">
+                            <select class="form-control input-sm bordercss" id="stdSubInfoId" autofocus="autofocus">
+                                <option value="0">Please Select</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1 col-sm-offset-6">
+            <input type="button" name="btnSubmit" id="btnSave" class="btn btn-sm btn-success" value="Save" />
+        </div>
+    </div>
+    <br />
+    
+</div>
+<div class="x_panel">
+    <div class="x_content">
+        <h3 style="text-align:center">Student Details</h3>
+        <fieldset>
+            <div class="row form-group">
+                <br />
+                <div id="grid"></div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+<script type="text/javascript">
+        
+
+    $(document).on("click", "#btnSave", function () {
+        var STudentName = $("#STudentName").val();
+        var StudentContactNo = $("#StudentContactNo").val();
+        var id = $("#STudentName").attr("data-id");
+        var stdDeptId = $("#stdDeptId").val();
+        var stdSubInfoId = $("#stdSubInfoId").val();
+          /*var ModuleNameForVoucherEntryId = $("#ddlModuleDropdown option:selected").val();*/
+          /*console.log(ModuleNameForVoucherEntryId);*/
+        if (STudentName == "") {
+            $.alert.open("info", "Please select student Name.");
+            return false;
+        } else if (StudentContactNo == "") {
+             $.alert.open("info", "Please select student Mobile Number.");
+             return false;
+         }
+
+        $.ajax({
+            type: "Post",
+            url: '@Url.Action("SaveStudent", "StdInfo")',
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify({ stdDeptId: stdDeptId, stdSubInfoId: stdSubInfoId, STudentName: STudentName, StudentContactNo: StudentContactNo, Id: id}),
+            dataType: "json",
+            success: function (dt) {
+                if (dt.Status == true) {
+                    $.alert.open("Messege!!", dt.Message, function () {
+                        GetStudentDetailsList();
+                        $("#stdDeptId").val(0);
+                        $("#stdSubInfoId").val(0);
+                        $("#STudentName").val('');
+                        $("#StudentContactNo").val('');
+                        $("#btnSave").prop("value", "Save");
+
+                    });
+                } else {
+                    $.alert.open("Error!!", dt.Message);
+                }
+            }
+        });
+        return true;
+    });
+
+    function LoadEditData(Id, stdDeptId, stdSubInfoId, STudentName, StudentContactNo) {
+      
+        $("#stdDeptId").val(stdDeptId);
+        $("#stdSubInfoId").val(stdSubInfoId);
+        $("#STudentName").val(STudentName);
+        $("#StudentContactNo").val(StudentContactNo);
+        $("#STudentName").attr("data-id", Id);
+        $("#btnSave").prop("value", "Update");
+        ChangeSubjectDropdown(Id = stdSubInfoId);
+
+    }
+    //$(document).ready(function () {
+    //    GetStudentList();
+    //    console.log(GetStudentList);
+    //});
+
+     function GetStudentDetailsList() {
+        var dataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: '@Url.Action("GetStudentDetails", "StdInfo", "http")',
+                    dataType: "json",
+                    data: {}
+                }
+            },
+            pageSize: 100,
+
+        });
+         $("#grid").kendoGrid({
+            dataSource: dataSource,
+            height: 300,
+            groupable: true,
+            reorderable: true,
+            filterable: true,
+            sortable: true,
+            resizable: true,
+            columnMenu: true,
+            noRecords: {
+                template: "Please Check again there is no data avaiable right now!"
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            columns: [
+                {
+                    title: "SL",
+                    field: "RowSl",
+                    width: "10%",
+                },
+                {
+                    field: "STudentName",
+                    title: "Student Name",
+                },
+                {
+                    field: "StudentContactNo",
+                    title: "Mobile Number",
+                },
+                {
+                    field: "DeptName",
+                    title: "Department Name",
+                },
+                {
+                    field: "SubjectName",
+                    title: "Subject Name",
+                },
+                {
+                    title: "Commands",
+                    width: "10%",
+                    template: function (r) {
+                        return '<a href="#" title="Change Status" onclick="LoadEditData(' + r.Id + ',' + r.stdDeptId + ',' + r.stdSubInfoId + ',' + "'" + r.STudentName + "'" + ', ' + "'" + r.StudentContactNo + "'" + ');" class="btn-action btn-primary"><i class="fa fa-pencil-square-o"></i></a>'
+                            + '<a href="#" title="Change Status" onclick="DeleteCategoryInfo(' + r.Id + ');" class="btn-action btn-danger"><i class="fa fa-trash-o"></i></a>';
+                    }
+                }
+
+                ]
+        });
+    }
+
+    function DeleteCategoryInfo(Id)
+    {
+        $.alert.open('confirm', 'Do you want to delete this record?', function (button) {
+            if (button == 'yes') {
+                $("#AjaxLoader").show();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("DeleteStudent", "StdInfo", "http")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ Id: Id }),
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#AjaxLoader").hide();
+                        if (data.Status == true) {
+                            $.alert.open("Success!!", data.Message, function () {
+                                window.location.reload();
+                            });
+                        }
+                        else {
+                            $.alert.open("Error!!", data.Message);
+                        }
+
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+        });
+
+    }
+     function ChangeSubjectDropdown(Id = 0) {
+
+            var stdSubInfoId = $("#stdSubInfoId");
+            var ddlDepartment = $("#stdDeptId").val();
+        $.ajax({
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            url: '@Url.Action("GetChangeSubjectDropdown", "StdInfo", "http")',
+            data: { Id: ddlDepartment },
+            dataType: 'json',
+            async: true,
+            success: function (data) {
+                stdSubInfoId.html('');
+                stdSubInfoId.append($('<option></option>').val("0").html("Please Select"));
+                $.each(data.data, function (id, option) {
+                    stdSubInfoId.append($('<option></option>').val(option.Id).html(option.SubjectShortName));
+
+                });
+                if (Id != 0) {
+                    $("#stdSubInfoId").val(Id);
+                }
+            },
+            error: function (request, status, error) {
+                alert(request.statusText + "/" + request.statusText + "/" + error);
+            }
+        });
+    }
+
+
+        $(document).on("change", "#stdDeptId", function () {
+            ChangeSubjectDropdown(Id = 0);
+
+        });
+    $(document).ready(function () {
+        GetStudentDetailsList();
+
+    });
+</script>
+
+
+==================================controller========================================
+using Common.Service.StoredProcedure;
+using ERP.Web.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Accounts.Controllers
+{
+    public class StdInfoController : Controller
+    {
+        // GET: StdInfo
+        private readonly ISPService spService;
+        public StdInfoController(ISPService spService)
+        {
+            this.spService = spService;
+        }
+        string sessionName = "STR_VoucherDataTable" + SessionHelper.LoggedInUserId.ToString();
+        StringBuilder sb = new StringBuilder();
+        public ActionResult Index()
+        {
+            var DepartmentList = spService.GetDataWithoutParameter("USP_GET_Department_For_DropdownList").Tables[0];
+            ViewBag.DepartmentList = DepartmentList;
+            return View();
+        }
+
+        public JsonResult SaveStudent(int stdDeptId, int stdSubInfoId, string STudentName, string StudentContactNo, int Id = 0)
+        {
+            try
+            {
+                var data = spService.GetDataWithParameter(new { stdDeptId = stdDeptId, stdSubInfoId = stdSubInfoId, STudentName = STudentName, StudentContactNo = StudentContactNo, CreatedUserId = SessionHelper.LoggedInUserId, id = Id }, "USP_INSERT_StudentList");
+
+                return Json(new { Message = "Save Successfully", Status = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Message = ex.InnerException.Message, Status = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public JsonResult GetStudentDetails()
+        {
+            try
+            
+            {
+                var stdList = spService.GetDataWithoutParameter("USP_GET_StdntList").Tables[0]
+                    .AsEnumerable().Select(x => new
+                    {
+                        Id = x.Field<int>("Id"),
+                        RowSl = x.Field<string>("RowSl"),
+                        STudentName = x.Field<string>("STudentName"),
+                        StudentContactNo = x.Field<string>("StudentContactNo"),
+                        DeptName = x.Field<string>("DeptName"),
+                        SubjectName = x.Field<string>("SubjectName"),
+                        stdDeptId = x.Field<int>("stdDeptId"),
+                        stdSubInfoId = x.Field<int>("stdSubInfoId")
+
+
+                    }).ToList();
+                return Json(stdList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = false, data = "", Message = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetChangeSubjectDropdown(int Id = 0)
+        {
+            try
+            {
+                var param = new { stdDeptId = Id };
+                var subList = spService.GetDataWithParameter(param, "USP_GET_StdSubjectInfo_For_DropdownList");
+
+                var bankAccListByOrg = subList.Tables[0].AsEnumerable()
+                .Select(x => new
+                {
+                    Id = x.Field<int>("Id"),
+                    SubjectShortName = x.Field<string>("SubjectShortName")
+                }).ToList();
+
+                return Json(new { status = true, data = bankAccListByOrg, message = "" }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, data = "", message = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public JsonResult DeleteStudent(int Id)
+        {
+            try
+            {
+
+                var data = spService.GetDataWithParameter(new { Id = Id }, "USP_DELETE_Student").Tables[0].AsEnumerable().Select(R => new
+                {
+                    meg = R.Field<string>("Message")
+                }).FirstOrDefault();
+
+                return Json(new { Message = data.meg, Status = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    Message = ex.InnerException == null ? ex.Message : ex.InnerException.Message,
+                    Status = false
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+    }
+}
+====================================================SP====================================
+=======================insert Student================
+USE [Ucas_Core_Account_ProbashiPalli]
+GO
+/****** Object:  StoredProcedure [dbo].[USP_INSERT_StudentList]    Script Date: 12/20/2022 11:22:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+/*
+EXEC USP_INSERT_StudentList  3, 1, 'Ucas hfg', '01501501', 15, 0
+*/
+ALTER PROC [dbo].[USP_INSERT_StudentList]
+@stdDeptId int,
+@stdSubInfoId int,
+@STudentName varchar(50), 
+@StudentContactNo varchar(15), 
+@CreatedUserId int,
+@Id INT = 0
+
+
+AS
+
+BEGIN
+
+	IF @Id > 0
+	BEGIN
+		UPDATE stdInfo
+		SET stdDeptId = @stdDeptId,
+			stdSubInfoId = @stdSubInfoId,
+			STudentName = @STudentName,
+			StudentContactNo = @StudentContactNo,
+			UpdateDate = GETDATE(),
+			UpdateUserId = @CreatedUserId
+			WHERE Id = @Id
+	END 
+	ELSE
+	BEGIN
+		INSERT INTO stdInfo(stdDeptId, stdSubInfoId, STudentName, StudentContactNo, CreateDate, CreatedUserId, isActive)
+		---VALUES(6,1,'U New','0555555555',15,1)
+		VALUES(@stdDeptId,@stdSubInfoId,@STudentName,@StudentContactNo,GETDATE(), @CreatedUserId,1)
+	END
+	----SELECT 'Save Successful.' Message
+END
+
+
+-- EXEC USP_INSERT_StudentList 6, 1, 'U New', '0555555555', 15, 1
+
+=====================================get Student=========================
+USE [Ucas_Core_Account_ProbashiPalli]
+GO
+/****** Object:  StoredProcedure [dbo].[USP_GET_StdntList]    Script Date: 12/20/2022 11:26:35 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/*
+  EXEC USP_GET_StdntList
+  */
+ALTER PROC [dbo].[USP_GET_StdntList]
+AS
+BEGIN
+SELECT CONVERT(VARCHAR,ROW_NUMBER() OVER(ORDER BY SI.Id)) AS RowSl
+, SI.STudentName, SI.StudentContactNo, sd.DeptName, sub.SubjectName, SI.stdDeptId, SI.stdSubInfoId, SI.isActive, SI.Id 
+FROM dbo.stdInfo  as SI
+inner join dbo.stdDept as sd on
+SI.stdDeptId = sd.Id and SI.isActive = 1
+left join dbo.stdSubInfo as sub on
+sub.Id=SI.stdSubInfoId
+END
+
+===================================================chenge DropDown=============================
+USE [Ucas_Core_Account_ProbashiPalli]
+GO
+/****** Object:  StoredProcedure [dbo].[USP_GET_StdSubjectInfo_For_DropdownList]    Script Date: 12/20/2022 11:26:49 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- EXEC USP_GET_StdSubjectInfo_For_DropdownList 'D2'
+
+ALTER PROC [dbo].[USP_GET_StdSubjectInfo_For_DropdownList]
+@stdDeptId int = 0
+AS
+BEGIN
+Select S.Id,S.SubjectShortName from stdSubInfo S 
+WHERE S.IsActive = 1 
+AND (@stdDeptId = 0 OR S.stdDeptId = @stdDeptId)
+END
+
+===========================================Delete ==================
+USE [Ucas_Core_Account_ProbashiPalli]
+GO
+/****** Object:  StoredProcedure [dbo].[USP_DELETE_Student]    Script Date: 12/20/2022 11:27:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--EXEC USP_DELETE_Student 1
+
+ALTER PROC [dbo].[USP_DELETE_Student] 
+@Id INT
+AS
+--BEGIN
+
+--IF NOT EXISTS (SELECT * FROM AccSubledgerMaster M WHERE M.AccSubledgerId = @Id)
+BEGIN
+	UPDATE stdInfo SET IsActive=0
+	WHERE Id = @Id
+	SELECT 'Delete Successful.' [Message]
+END
+
+--BEGIN
+--   SELECT 'Invalid attempt, A child of Ledger exists in ledger master.' [Message]
+--END
+--END
+
+--select * from AccSubledgerMaster
+--select * from stdInfo
+===========================================================table====================================
+
+====================================student info=================
+Id	int	Unchecked
+stdDeptId	int	Unchecked
+stdSubInfoId	int	Unchecked
+STudentName	varchar(50)	Unchecked
+StudentContactNo	varchar(15)	Unchecked
+CreateDate	datetime	Checked
+UpdateDate	datetime	Checked
+CreatedUserId	int	Unchecked
+UpdateUserId	int	Checked
+isActive	bit	Unchecked
+======================================student department====================
+Id	int	Unchecked
+DeptShortName	varchar(10)	Unchecked
+DeptName	varchar(50)	Checked
+CreateDate	datetime	Unchecked
+UpdateDate	datetime	Checked
+CreatedUserId	int	Checked
+UpdateUserId	int	Checked
+isActive	bit	Unchecked
+======================================================subject =================
+Id	int	Unchecked
+stdDeptId	int	Unchecked
+SubjectShortName	varchar(10)	Unchecked
+SubjectName	varchar(50)	Unchecked
+isActive	bit	Unchecked
+CreateDate	datetime	Checked
+UpdateDate	datetime	Checked
+CreatedUserId	int	Checked
+UpdateUserId	int	Checked
