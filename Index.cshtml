@@ -12,7 +12,7 @@
     }).ToList();
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>*@
 <style type="text/css">
     .srchtable {
         font-family: Arial, Helvetica, sans-serif;
@@ -124,13 +124,16 @@
         border: 1px solid transparent;
         border-radius: 4px;
     }
+    div.panel-heading h3{
+        text-align:center;
+    }
 </style>
 
 <div class="row" style="display:none">
     <div class="col-sm-12">
         <div class="panel panel-success panel-custom">
             <div class="panel-heading PageHeader">
-                <h3 class="panel-title">STUDENT INFOPRMATION</h3>
+                <h3 class="panel-title" >STUDENT INFOPRMATION</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -367,14 +370,14 @@
                     title: "Department Name",
                 },
                 {
-                    field: "SubjectName",
-                    title: "Subject Name",
+                    field: "SubjectShortName",
+                    title: "Subject",
                 },
                 {
                     title: "Commands",
                     width: "10%",
                     template: function (r) {
-                        return '<a href="#" title="Change Status" onclick="LoadEditData(' + r.Id + ',' + r.stdDeptId + ',' + r.stdSubInfoId + ',' + "'" + r.STudentName + "'" + ', ' + "'" + r.StudentContactNo + "'" + ');" class="btn-action btn-primary"><i class="fa fa-pencil-square-o"></i></a>'
+                        return '<a href="#" title="Change Status" onclick="LoadEditData(' + r.Id + ',' + r.stdDeptId + ',' + r.stdSubInfoId + ',' + "'" + r.STudentName + "'" + ', ' + "'" + r.StudentContactNo + "'" + ');"id="clickedit", class="btn-action btn-primary"><i class="fa fa-pencil-square-o"></i></a>'
                             + '<a href="#" title="Change Status" onclick="DeleteCategoryInfo(' + r.Id + ');" class="btn-action btn-danger"><i class="fa fa-trash-o"></i></a>';
                     }
                 }
@@ -447,6 +450,7 @@
             ChangeSubjectDropdown(Id = 0);
 
         });
+   
     $(document).ready(function () {
         GetStudentDetailsList();
 

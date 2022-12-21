@@ -31,9 +31,13 @@ namespace Accounts.Controllers
         {
             try
             {
-                var data = spService.GetDataWithParameter(new { stdDeptId = stdDeptId, stdSubInfoId = stdSubInfoId, STudentName = STudentName, StudentContactNo = StudentContactNo, CreatedUserId = SessionHelper.LoggedInUserId, id = Id }, "USP_INSERT_StudentList");
+                var data = spService.GetDataWithParameter(new { stdDeptId = stdDeptId, stdSubInfoId = stdSubInfoId, STudentName = STudentName, StudentContactNo = StudentContactNo, CreatedUserId = SessionHelper.LoggedInUserId, id = Id }, "USP_INSERT_StudentList").Tables[0].AsEnumerable().Select(r => new
+                {
+                    msg = r.Field<string>("Message")
+                }).FirstOrDefault();
 
-                return Json(new { Message = "Save Successfully", Status = true }, JsonRequestBehavior.AllowGet);
+
+                return Json(new { Message = data.msg, Status = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -57,7 +61,8 @@ namespace Accounts.Controllers
                         DeptName = x.Field<string>("DeptName"),
                         SubjectName = x.Field<string>("SubjectName"),
                         stdDeptId = x.Field<int>("stdDeptId"),
-                        stdSubInfoId = x.Field<int>("stdSubInfoId")
+                        stdSubInfoId = x.Field<int>("stdSubInfoId"),
+                        SubjectShortName = x.Field<string>("SubjectShortName")
 
 
                     }).ToList();
