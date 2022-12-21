@@ -579,14 +579,14 @@ namespace Accounts.Controllers
 =======================insert Student================
 USE [Ucas_Core_Account_ProbashiPalli]
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INSERT_StudentList]    Script Date: 12/20/2022 11:22:48 AM ******/
+/****** Object:  StoredProcedure [dbo].[USP_INSERT_StudentList]    Script Date: 12/21/2022 12:07:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
 /*
-EXEC USP_INSERT_StudentList  3, 1, 'Ucas hfg', '01501501', 15, 0
+EXEC USP_INSERT_StudentList  3, 1, 'Ucas hfg', '01756441572', 15, 1
 */
 ALTER PROC [dbo].[USP_INSERT_StudentList]
 @stdDeptId int,
@@ -603,20 +603,36 @@ BEGIN
 
 	IF @Id > 0
 	BEGIN
-		UPDATE stdInfo
-		SET stdDeptId = @stdDeptId,
-			stdSubInfoId = @stdSubInfoId,
-			STudentName = @STudentName,
-			StudentContactNo = @StudentContactNo,
-			UpdateDate = GETDATE(),
-			UpdateUserId = @CreatedUserId
-			WHERE Id = @Id
+		IF NOT EXISTS (SELECT * FROM stdInfo S WHERE S.IsActive = 1 AND  StudentContactNo= @StudentContactNo AND Id != @Id)
+			BEGIN
+				UPDATE stdInfo
+				SET stdDeptId = @stdDeptId,
+					stdSubInfoId = @stdSubInfoId,
+					STudentName = @STudentName,
+					StudentContactNo = @StudentContactNo,
+					UpdateDate = GETDATE(),
+					UpdateUserId = @CreatedUserId
+					WHERE Id = @Id
+					SELECT 'Update Successful.' [Message]
+					END
+			ELSE
+			BEGIN
+			  SELECT 'Phone Number already exists in list.' [Message]
+			END
 	END 
 	ELSE
+		IF NOT EXISTS (SELECT * FROM stdInfo S WHERE S.IsActive = 1 AND  StudentContactNo= @StudentContactNo)
+
 	BEGIN
 		INSERT INTO stdInfo(stdDeptId, stdSubInfoId, STudentName, StudentContactNo, CreateDate, CreatedUserId, isActive)
 		---VALUES(6,1,'U New','0555555555',15,1)
 		VALUES(@stdDeptId,@stdSubInfoId,@STudentName,@StudentContactNo,GETDATE(), @CreatedUserId,1)
+
+		SELECT 'Save Successful.' [Message]
+	END
+	ELSE
+	BEGIN
+	  SELECT 'Phone Number already exists in list.' [Message]
 	END
 	----SELECT 'Save Successful.' Message
 END
